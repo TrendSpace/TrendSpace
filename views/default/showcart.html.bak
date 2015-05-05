@@ -1,0 +1,44 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/showcart.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+{{lister=[]}}
+{{sum=0}}
+{{if len(session.cart)==0:}}
+<div id="empty">Your cart is empty, continue shopping</div>
+{{pass}}
+{{if len(session.cart)!=0:}}
+<table id="carttable">
+<tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Shipping Details</th>
+    <th>Quantity in Cart</th>
+    <th>Subtotal</th>
+</tr>
+{{for i in range(len(session.cart)):}}
+<tr>
+    {{sum+=int(session.quantity[i])*int((db(db.itemsmain.id==session.cart[i]).select()[0].Price))}}
+    {{a=db(db.itemsmain.id==session.cart[i]).select()[0]}}
+    <td>{{=a.name}}</td>
+    <td>Rs. {{=a.Price}}</td>
+    <td>Free</td>
+    <td>{{=session.quantity[i]}}</td>
+    <td>Rs. {{=int(session.quantity[i])*int((db(db.itemsmain.id==session.cart[i]).select()[0].Price))}}</td>
+</div>
+</tr>
+{{pass}}
+</table>
+    
+<h4>&nbsp Amount Payable: Rs. {{=sum}}</h4>
+<br />
+{{pass}}
+
+<table>
+    <tr>
+        <td><a href="{{=URL('index')}}" class="cssbutton">Continue Shopping</a></td>
+        <td><a href="{{=URL('clearcart')}}" class="cssbutton">Clear Cart</a></td>
+        <td><a href="{{=URL('buy')}}" class="cssbutton">Confirm Order</a></td>
+    </tr>
+</table>

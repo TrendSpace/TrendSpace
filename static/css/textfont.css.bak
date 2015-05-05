@@ -1,0 +1,8 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(/static/css/font.woff);
+}
+
+body{
+    font-family:myFirstFont;
+}

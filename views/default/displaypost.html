@@ -1,0 +1,43 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+<style>
+a{
+    text-decoration: none !important;
+}
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 3px 3px;
+color: white;
+margin:5px;
+text-decoration: none !important;
+font: bold 90% "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, sans-serif;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 3px 3px 5px 5px; /*shift text 1px to the right and down*/
+}
+</style>
+
+{{for t in val:}}
+    <a href="{{=URL('singlepost',args=t.id)}}">
+    <div class="well">
+    <h4>
+        {{=t.title}}
+    </h4>
+    <h6>
+        Posted On: {{=t.created_on}}
+    </h6>
+    <div style="padding:5px;border-top:2px solid #DDDDDD;">
+        {{=t.body}}
+    </div>
+    </div>
+    </a>
+{{pass}}
+
+<a href="{{=URL('insertpost',args=request.args(0))}}" class="cssbutton">Click here to create a new post</a>

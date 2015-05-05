@@ -1,0 +1,37 @@
+#carttable{
+    width:100%;
+    padding:10px;
+    margin:10px;
+}
+
+#carttable th{
+    background-color:#C9C9C9;
+}
+
+#carttable td,th{
+    border: solid #B5B5B5 1px;
+    padding:5px;
+}
+
+#empty{
+    text-align:center;
+    font-size:20px;
+    padding:20px;
+    margin:20px;
+}
+
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 3px 3px;
+color: white;
+margin:5px;
+text-decoration: none !important;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 3px 3px 5px 5px; /*shift text 1px to the right and down*/
+}

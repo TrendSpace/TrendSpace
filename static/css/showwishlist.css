@@ -1,0 +1,20 @@
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 3px 3px;
+color: white;
+margin:5px;
+text-decoration: none !important;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 3px 3px 5px 5px; /*shift text 1px to the right and down*/
+}
+
+.special{
+    padding:5px;
+    background-color:#DADADA;
+}

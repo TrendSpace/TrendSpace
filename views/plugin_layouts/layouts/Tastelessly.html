@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Tastelessly
+Description: A very light design suitable for community sites and blogs.
+Version    : 1.0
+Released   : 20080122
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>
+   {{=response.title or request.application}}
+  </title>
+  {{response.files.append(URL(request.application,'static','plugin_layouts/layouts/Tastelessly/style.css'))}}
+  {{response.files.append(URL('static','plugin_layouts/superfish.js'))}}
+  {{include 'web2py_ajax.html'}}
+  <style>
+ul.web2py-menu-vertical { width: 150px; position: relative; top:1em; left:1em;  z-index:30; border:0; margin:0; padding: 0; list-style: none; text-decoration: none;}
+ul.web2py-menu-vertical li { margin:0; padding:0; border:0; width: 150px; background: black; text-align:left;}
+ul.web2py-menu-vertical li a { margin:0; padding: 1px 3px 1px 3px; border:0; width: 144px; color: white; font-size:12px;}
+div.flash { position: fixed; float: right; padding: 10px; top: 10px; right: 30px; opacity: 0.75; margin: 10px 10px 10px 10px; text-align: center; clear: both; color: #fff; font-size: 11pt; text-align: center; vertical-align: middle; cursor: pointer; background: black; border: 2px solid #fff; -moz-border-radius: 5px; -webkit-border-radius: 5px; z-index: 2; }
+div.error { background-color: red; color: white; padding: 3px; }
+.auth_navbar { text-align:right; z-index:20; position: absolute; top: 2px; right:30px; border:0; padding:0 }
+  </style>
+ </head>
+ <body>
+  <!-- start header -->
+  {{try:}}{{=auth.navbar(action=URL('default','user'))}}{{except:pass}}
+
+  <!-- start header -->
+  <div id="header">
+   <div id="menu">
+    {{=MENU(response.menu,_class='web2py-menu')}}
+    <script>
+      jQuery(document).ready(function(){jQuery('ul.web2py-menu').superfish({delay:400});});
+    </script>
+   </div>
+   <div id="search">
+    <form id="searchform" method="get" action="#">
+     <fieldset>
+      <input id="s" type="text" name="s" value="" class="text" />
+      <input id="x" type="submit" value="Search" class="button" />
+     </fieldset>
+    </form>
+   </div>
+  </div>
+  <div id="logo">
+   <h1>
+    {{=response.title or request.application}}
+   </h1>
+   <h2>
+    {{=response.subtitle or '=response.subtitle'}}
+   </h2>
+  </div>
+  <!-- end header -->
+  <hr />
+  <!-- start page -->
+  <div id="page">
+   <!-- start content -->
+   <div id="content">
+    <div class="flash">{{=response.flash or ''}}</div>
+    {{include}}
+   </div>
+   <!-- end content -->
+   <!-- start sidebar one -->
+   <div id="sidebar1" class="sidebar">
+    <ul>
+     <li id="recent-posts">
+      <h2>
+       Recent Posts
+      </h2>
+      <ul>
+       <li>
+        <h3>
+         <a href="#">
+          Aliquam Libero
+         </a>
+        </h3>
+        <p>
+         Nullam ante orci, eget, tempus quis, ultrices in, est. Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat vel, suscipit in, mattis placerat, nulla. Sed ac leo. Pellentesque imperdiet.
+         <a href="#">
+          More&hellip;
+         </a>
+        </p>
+       </li>
+       <li>
+        <h3>
+         <a href="#">
+          Semper Vestibulum
+         </a>
+        </h3>
+        <p>
+         Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.
+         <a href="#">
+          More&hellip;
+         </a>
+        </p>
+       </li>
+       <li>
+        <h3>
+         <a href="#">
+          Etiam Malesuada
+         </a>
+        </h3>
+        <p>
+         Donec leo. Vivamus fermentum nibh in augue. Praesent a lacus at urna congue rutrum. Nulla enim eros, porttitor eu, tempus id, varius non, nibh. Duis enim nulla, luctus eu, dapibus lacinia, venenatis id, quam. Vestibulum imperdiet, magna nec eleifend rutrum, nunc lectus vestibulum velit, euismod lacinia quam nisl id lorem. Quisque erat.
+         <a href="#">
+          More&hellip;
+         </a>
+        </p>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+   <!-- end sidebar one -->
+   <!-- start sidebar two -->
+   <div id="sidebar2" class="sidebar">
+    <ul>
+     <li>
+      <h2>
+       Categories
+      </h2>
+      <ul>
+       <li>
+        <a href="#">
+         Aliquam libero
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Consectetuer elit
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Metus pellentesque
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Suspendisse mauris
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Urnanet molestie semper
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Proin orci porttitor
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h2>
+       Archives
+      </h2>
+      <ul>
+       <li>
+        <a href="#">
+         September
+        </a>
+        (23)
+       </li>
+       <li>
+        <a href="#">
+         August
+        </a>
+        (31)
+       </li>
+       <li>
+        <a href="#">
+         July
+        </a>
+        (31)
+       </li>
+       <li>
+        <a href="#">
+         June
+        </a>
+        (30)
+       </li>
+       <li>
+        <a href="#">
+         May
+        </a>
+        (31)
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h2>
+       Lorem ipsum dolor
+      </h2>
+      <ul>
+       <li>
+        <a href="#">
+         Aliquam libero
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Consectetuer elit
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Metus pellentesque
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Suspendisse mauris
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Urnanet molestie semper
+        </a>
+       </li>
+       <li>
+        <a href="#">
+         Proin orci porttitor
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </div>
+   <!-- end sidebar two -->
+   <div style="clear: both;">
+    &nbsp;
+   </div>
+  </div>
+  <!-- end page -->
+  <hr />
+  <!-- start footer -->
+  <div id="footer">
+   <p>
+    &copy;2007 All Rights Reserved. &nbsp;&bull;&nbsp; Designed by
+    <a href="http://www.freecsstemplates.org/">
+     Free CSS Templates
+    </a>
+    .
+   </p>
+  </div>
+  <!-- end footer -->
+ </body>
+</html>

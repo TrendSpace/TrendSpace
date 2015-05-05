@@ -1,0 +1,43 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/userprofile.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+<h3>
+    User Profile
+</h3>
+<div class="box">
+     First Name: {{=vals.first_name}}
+    <br />
+     Last Name: {{=vals.last_name}}
+    <br />
+    <br />
+    Date Of Birth: {{=vals.Date_Of_Birth}}
+    <br />
+    Gender: {{=vals.Gender}}
+    <br />
+    <br />
+    Contact Number: {{=vals.Phone_Number}}
+    <br />
+    <br />
+    {{if auth.user.id!=vals.id:}}<a href="{{=URL('mailtoretailer',args=[vals.email,vals.id])}}" class="cssbutton">Contact by mail</a>{{pass}}
+</div>
+<hr />
+{{if auth.has_membership('Admin') or auth.has_membership('Retailer'):}}
+<h4>
+    Items for Sale
+</h4>
+{{pass}}
+<div>
+{{for t in form:}}
+<a href="{{=URL('singlepostitem',args=t.id)}}">
+<div class="items">
+    <img src="{{=URL('default','download',args=t.Image)}}" style="width:100px;max-width:100px;min-width:100px;max-height:100px;min-height:100px;height:100px;" />
+    <h5>{{=t.name}}</h5>
+    <h4>
+        Rs: {{=t.Price}}
+    </h4>
+</div>
+</a>
+{{pass}}
+</div>

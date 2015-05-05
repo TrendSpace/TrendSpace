@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/displayitempost.css')}}" rel="stylesheet" type="text/css" />
+
+<div class="well">
+{{for t in val:}}
+<a href="{{=URL('singlepostitem',args=t.id)}}">
+<div class="items" onmouseover="show({{=t.id}})">
+    <img src="{{=URL('default','download',args=t.Image)}}"  style="width:200px;max-width:200px;min-width:200px;max-height:200px;min-height:200px;height:200px;" class="img" />
+    <h5>{{=t.name}}</h5>
+    <h4>
+        Rs: {{=t.Price}}
+    </h4>
+    <h6>
+        Quantity: {{=t.Quantity}}
+    </h6>
+    <h6>
+        Created On: {{=t.created_on}}
+    </h6>
+</div>
+</a>
+{{pass}}
+</div>

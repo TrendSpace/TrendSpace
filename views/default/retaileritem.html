@@ -1,0 +1,27 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/retaileritem.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+{{for t in formlist:}}
+<a href="{{=URL('singlepostitem',args=t.id)}}">
+<div class="items" >
+    <img src="{{=URL('default','download',args=t.Image)}}"  style="width:200px;max-width:200px;min-width:200px;max-height:200px;min-height:200px;height:200px;" class="img" />
+    <h5>{{=t.name}}</h5>
+    <h4>
+        Rs: {{=t.Price}}
+    </h4>
+    <h6>
+        Quantity: {{=t.Quantity}}
+    </h6>
+    <h6>
+        Created On: {{=t.created_on}}
+    </h6>
+</div>
+</a>
+{{pass}}
+<br /><br />
+<h3>
+    Update Stock
+</h3>
+{{=forms}}

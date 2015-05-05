@@ -1,0 +1,131 @@
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
+
+#########################################################################
+## This is a sample controller
+## - index is the default action of any application
+## - user is required for authentication and authorization
+## - download is for downloading files uploaded in the db (does streaming)
+## - api is an example of Hypermedia API support and access control
+#########################################################################
+
+"""
+    http://..../[app]/default/category
+    http://..../[app]/default/displaypost/args=categoryid
+    http://..../[app]/default/singlepost/args=postid
+    http://..../[app]/default/insertpost/args=categoryid
+    http://..../[app]/default/ratingadd/args=postid
+"""
+
+def index():
+    return locals()
+
+@auth.requires_login()
+def ratingadd():
+    if len(db((db.votetracker.personid==auth.user.id)&(db.votetracker.postid==request.args(0))).select())==0:
+        currating=db(db.post.id==request.args(0)).select()[0].rating
+        db(db.post.id==request.args(0)).update(rating=1+currating)
+        db.votetracker.insert(personid=auth.user.id,postid=request.args(0))
+        session.flash="Your vote has been added"
+    else:
+        session.flash="You have already voted"
+    redirect(URL('singlepost',args=request.args(0)))
+    return locals()
+
+@auth.requires_login()
+def singlepost(): #Display a single post along with its comments
+    val3=db(db.post.id==request.args(0)).select()
+    db.comm.post.default=(request.args(0))
+    form=SQLFORM(db.comm).process()
+    return locals()
+
+def category(): #Shows us the categories present
+    val2=db(db.category).select()
+    return locals()
+
+def displaypost(): #Displays all the posts of a certain category
+    val=db(db.post.category==request.args(0)).select()
+    return locals()
+
+@auth.requires_login()
+def insertpost(): #Inserts a post in the certain category
+    db.post.category.default=request.args(0)
+    vals=SQLFORM(db.post).process()
+    if vals.accepted:
+        session.flash="Well Done!"
+        redirect(URL('displaypost',args=request.args(0)))
+    return locals()
+
+@auth.requires_membership('admin')
+def posttable():
+    valss=SQLFORM.grid(db.post)
+    return locals()
+
+@auth.requires_membership('admin')
+def addpermissions():
+    gen=SQLFORM(db.auth_membership).process()
+    return locals()
+
+def additem():
+    gens=SQLFORM(db.items).process()
+    return locals()
+
+def user():
+    """
+    exposes:
+    http://..../[app]/default/user/login
+    http://..../[app]/default/user/logout
+    http://..../[app]/default/user/register
+    http://..../[app]/default/user/profile
+    http://..../[app]/default/user/retrieve_password
+    http://..../[app]/default/user/change_password
+    http://..../[app]/default/user/manage_users (requires membership in
+    use @auth.requires_login()
+        @auth.requires_membership('group name')
+        @auth.requires_permission('read','table name',record_id)
+    to decorate functions that need access control
+    """
+    if request.args(0) in ['register', 'profile']:
+        hidden_fields = (user_extra_fields if request.args(1) == 'tutor' else tutor_extra_fields)
+        if request.args(1)=='tutor':
+            auth.settings.registration_requires_approval=True
+        for field in hidden_fields:
+            field.readable = field.writable = False
+    form=auth()
+    session.flash=request.args(1)
+    if form.accepts(request,session):
+        if request.args(1)=='tutor':
+            db.auth_membership.insert(user_id=auth.user_id,group_id=9)
+    return locals()
+
+
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)
+
+
+def call():
+    """
+    exposes services. for example:
+    http://..../[app]/default/call/jsonrpc
+    decorate with @services.jsonrpc the functions to expose
+    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
+    """
+    return service()
+
+
+@auth.requires_login() 
+def api():
+    """
+    this is example of API with access control
+    WEB2PY provides Hypermedia API (Collection+JSON) Experimental
+    """
+    from gluon.contrib.hypermedia import Collection
+    rules = {
+        '<tablename>': {'GET':{},'POST':{},'PUT':{},'DELETE':{}},
+        }
+    return Collection(db).process(request,response,rules)

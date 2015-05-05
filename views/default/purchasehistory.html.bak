@@ -1,0 +1,19 @@
+{{extend 'layout.html'}}
+{{import datetime}}
+<h2>
+    Purchase History
+</h2>
+<br /><br />
+{{for i in vals:}}
+<div style="border-bottom:2px solid #003366;">
+    <h4><a href="{{=URL('singlepostitem',args=i.itemid)}}">{{=db(db.itemsmain.id==i.itemid).select()[0].name}}</a></h4>
+    <p>
+        {{tdelta = datetime.datetime.now() - db(db.shophistory.id==i.id).select()[0].created_on
+        str='delivered'
+        if(tdelta.total_seconds()/(3600*24) < 1): str='processing'
+        if(tdelta.total_seconds()/(3600*24) >= 1 and tdelta.total_seconds()/(3600*24) < 2): str='shipped'}}
+        Shipping Status: <b>{{=str}}</b>
+    </p>
+    <p>&nbsp</p>
+</div>
+{{pass}}

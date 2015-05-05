@@ -1,0 +1,6 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+<h1>Posts</h1>
+{{=BEAUTIFY(response._vars)}}

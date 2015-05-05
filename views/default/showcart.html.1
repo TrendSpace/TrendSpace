@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+
+{{lister=[]}}
+
+{{for i in range(len(session.cart)):}}
+{{if session.cart[i] not in lister:}}
+<div>
+    {{lister.append(session.cart[i])}}
+    {{=db(db.itemsmain.id==session.cart[i]).select()}}
+    {{=session.quantity[i]}}
+</div>
+{{pass}}
+{{pass}}
+
+<button id="clearcart" onclick="{{session.cart=[]
+                                session.quantity=[]}}">
+    Clear Cart
+</button>
+
+<a href="{{=URL('buy')}}">Confirm Order</a>

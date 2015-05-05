@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/showwishlist.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+{{if len(lists)==0:}}
+<h5 align="center">
+    Wish list is empty
+</h5>
+{{pass}}
+{{if len(lists)!=0:}}
+{{for k in lists:}}
+<div style="margin-top:15px;">
+    <a href="{{=URL('default','singlepostitem',args=k.itemid)}}"><span class="special">{{=db(db.itemsmain.id==k.itemid).select()[0].name}}</span></a>
+    <a href="{{=URL('deletefromwish',args=k.itemid)}}" class="cssbutton">Delete</a>
+</div>
+{{pass}}
+{{pass}}

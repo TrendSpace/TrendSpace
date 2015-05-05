@@ -1,0 +1,40 @@
+.box{
+    padding:10px;
+    border-top:#0A3151 2px solid;
+    border-bottom:#0A3151 2px solid;
+}
+
+.items{
+    display: inline-block;
+    padding:5px;
+    margin:15px;
+    width: 25%;
+    overflow: hidden;
+    text-align: center;
+    border-radius:5px;
+    border: #0A3151 2px solid;
+}
+
+.items:hover{
+    border: #3366CC 2px solid;
+    box-shadow: 3px 3px 3px 3px #9D9D9D;
+}
+
+.anchorc{
+    color: white;
+}
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 3px 3px;
+color: white;
+margin:5px;
+text-decoration: none !important;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 3px 3px 5px 5px; /*shift text 1px to the right and down*/
+}

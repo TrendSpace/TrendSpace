@@ -1,0 +1,6 @@
+{{=form}}
+
+<script>
+    var table = $('#example').DataTable({ ajax: "data.json"} );
+    setInterval( function () { table.ajax.reload();}, 30000 );
+</script>

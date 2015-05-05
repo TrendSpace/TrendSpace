@@ -1,0 +1,41 @@
+.boxed2 {
+  border: 1px solid #003366 ;
+  border-radius: 15px;
+  padding:35px;
+  margin-right:15%;
+  margin-top:5%;
+  font-weight:normal;
+} 
+.comm{
+    color:blue;
+    font-size:16px;
+    font-weight:normal;
+    padding-top:2%;
+}
+.text{
+    color:#131313;
+    font-size:14px;
+    padding-left:5%;
+    padding-top:1%;
+    display:block;
+    font-weight:normal;
+    width: 85%;
+    word-wrap: break-word;
+}
+
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 3px 3px;
+color: white;
+margin:5px;
+margin-left:10px;
+text-decoration: none !important;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 3px 3px 5px 5px; /*shift text 1px to the right and down*/
+}

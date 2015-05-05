@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+<link href="{{=URL('static', 'css/buy.css')}}" rel="stylesheet" type="text/css" />
+{{count = 1 }}
+<h3>
+    Your order will be delivered to:<br />
+</h3>
+{{for i in forms:}}
+<div class="ads">
+    <input type="radio" name="selector" checked="checked">
+    <span>
+        address #{{=count}}:<span>&nbsp</span>last modified on:{{=i.modified_on}}
+    </span>
+    <br />
+    <span class="text">
+        {{=i.body}}
+    </span>
+    {{count=count + 1}}
+    </input>
+</div>
+{{pass}}
+<h4>
+    Add a new address
+</h4>
+{{=addnew}}
+
+<a href="{{=URL('successbuy')}}" class="cssbutton">Place Order</a>

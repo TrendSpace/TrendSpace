@@ -1,0 +1,31 @@
+.items{
+    display: inline-block;
+    padding:5px;
+    margin:15px;
+    width: 25%;
+    overflow: hidden;
+    text-align: center;
+    border-radius:5px;
+    border: #0A3151 2px solid;
+}
+
+.items:hover{
+    border: #3366CC 2px solid;
+    box-shadow: 3px 3px 3px 3px #9D9D9D;
+}
+
+#similar{
+    height: 80%;
+    width: 80%;
+}
+
+.pagerLink {
+    background-color: #E4F5F8;
+    border: 1px solid #C0DEED; 
+    text-decoration: none !important;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}

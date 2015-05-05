@@ -1,0 +1,220 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/leftmenu.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/imagescroll.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+
+<style>
+    .slider{
+        width:800px;max-width:800px;min-width:800px;max-height:400px;min-height:400px;height:400px;
+    }
+</style>
+
+<div id="containers">
+    <div class="slider_wrapper">
+        <ul id="image_slider">
+            <li><img class="slider" src="http://unsweetened.ca/wp-content/uploads/2013/06/Smartphones-HTC-Blackberry-Samsung-iPhone.jpg" /></li>
+            <li><img class="slider" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRcziZErLrTq2Ej8f9HiDsBOCaJcib-ZOLCN-Qg7v2dIBp7t4pu" /></li>
+            <li><img class="slider" src="http://digitis.us/wp-content/uploads/2012/11/Smartphones.jpg" /></li>
+         </ul>
+         <span class="nvgt" id="prev"></span>
+         <span class="nvgt" id="next"></span>
+    </div>
+	<ul id="pager">
+	</ul>
+</div>
+
+<div>
+<table>
+<tr>
+    <td width="30%">
+        <div id='cssmenu'>
+            <ul>
+              <li class='active'><a href='#'><span>Home</span></a></li>
+              {{for i in db(db.maincategory).select():}}
+              <li class='has-sub'><a href='#'><span>{{=i.mainname}}</span></a>
+                  <ul>
+                      {{for j in db(db.itemcategory.main_category==i.id).select():}}
+                      <li><a href="{{=URL('displaypostitem',args=j.id)}}"><span>{{=j.name}}</span></a></li>
+                      {{pass}}
+                  </ul>
+              </li>
+              {{pass}}
+            </ul>
+        </div>
+    </td>
+    <td width="70%">
+        <h2>
+            Search
+        </h2>
+        <input type="text" id="mytext" name="temp"></input>
+        <select name="temp2" id="criteria">
+            <option value="Price">Price</option>
+            <option value="Rating">Rating</option>
+            <option value="Date">Date</option>
+        </select>
+        <select name="temp3" id="order">
+            <option value="Ascending">Ascending</option>
+            <option value="Descending">Descending</option>
+        </select>
+        <div id="testerdiv">
+        </div>
+        <div id="hideable">
+        <table>
+        {{for t in form:}}
+            <tr><td></td></tr>
+            <tr class='clickable-row' data-href="{{=URL('singlepostitem',args=t.id)}}">
+                <td style="padding:10px;"><img src="{{=URL('default','download',args=t.Image)}}" style="width:100px;max-width:100px;min-width:100px;max-height:100px;min-height:100px;height:100px;" /></td>
+                <td style="padding:10px;"><p style="font-size:24px;">{{=t.name}}</p><p style="font-size:18px;">Category: {{=t.itemcategory.name}}</p></td>
+                <td style="padding:10px;font-size:24px;">Rs. {{=t.Price}}</td>
+                <td style="padding:10px;">Retailer: {{=t.Retailer.first_name}}</td>
+            </tr>
+            <tr><td></td></tr>
+        {{pass}}
+        </table>
+        </div>
+    <br />
+        <h2 style="padding:20px;border-top:black solid 2px;border-color:#003366;">
+            Latest..........
+        </h2>
+        <div id="hideable2">
+        {{sum=0}}
+        <table>
+        {{for t in form2:}}
+            {{sum+=1}}
+            {{if sum < 8:}}
+            <tr><td></td></tr>
+            <tr class='clickable-row' data-href="{{=URL('singlepostitem',args=t.id)}}">
+                <td style="padding:10px;"><img src="{{=URL('default','download',args=t.Image)}}" style="width:100px;max-width:100px;min-width:100px;max-height:100px;min-height:100px;height:100px;" /></td>
+                <td style="padding:10px;"><p style="font-size:24px;">{{=t.name}}</p><p style="font-size:18px;">Category: {{=t.itemcategory.name}}</p></td>
+                <td style="padding:10px;font-size:24px;">Rs. {{=t.Price}}</td>
+                <td style="padding:10px;">Retailer: {{=t.Retailer.first_name}}</td>
+            </tr>
+            <tr><td></td></tr>
+            {{pass}}
+        {{pass}}
+        </table>
+        </div>
+    </td>
+</tr>
+</table>
+</div>
+<h3 align="center">
+    <a href="{{=URL('default','category')}}" class="cssbutton">Go to the Forum</a>
+</h3>
+<script src="{{=URL('static', 'js/leftmenu.js')}}" type="text/javascript"></script>
+<script>
+    jQuery("#mytext").keyup(function(){ajax('{{=URL('default', 'autorefresh')}}', ['temp','temp2','temp3'], 'testerdiv'); document.getElementById('hideable').style.display="none";});
+    jQuery("#criteria").click(function(){ajax('{{=URL('default', 'autorefresh')}}', ['temp','temp2','temp3'], 'testerdiv'); document.getElementById('hideable').style.display="none";});
+    jQuery("#order").click(function(){ajax('{{=URL('default', 'autorefresh')}}', ['temp','temp2','temp3'], 'testerdiv'); document.getElementById('hideable').style.display="none";});
+    jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.document.location = $(this).data("href");
+    });
+});
+</script>
+<script>
+//1. set ul width 
+//2. image when click prev/next button
+var ul;
+var liItems;
+var imageNumber;
+var imageWidth;
+var prev, next;
+var currentPostion = 0;
+var currentImage = 0;
+var setter;
+
+function init(){
+    setter=setInterval(function(){onClickNext()},5000);
+	ul = document.getElementById('image_slider');
+	liItems = ul.children;
+	imageNumber = liItems.length;
+	imageWidth = liItems[0].children[0].clientWidth;
+	ul.style.width = parseInt(imageWidth * imageNumber) + 'px';
+	prev = document.getElementById("prev");
+	next = document.getElementById("next");
+	generatePager(imageNumber);
+	prev.onclick = function(){ onClickPrev();clearInterval(setter);setter=setInterval(function(){onClickNext()},5000);};
+	next.onclick = function(){ onClickNext();clearInterval(setter);setter=setInterval(function(){onClickNext()},5000);};
+}
+
+function animate(opts){
+	var start = new Date;
+	var id = setInterval(function(){
+		var timePassed = new Date - start;
+		var progress = timePassed / opts.duration;
+		if (progress > 1){
+			progress = 1;
+		}
+		var delta = opts.delta(progress);
+		opts.step(delta);
+		if (progress == 1){
+			clearInterval(id);
+			opts.callback();
+		}
+	}, opts.delay || 17);
+	//return id;
+}
+
+function slideTo(imageToGo){
+	var direction;
+	var numOfImageToGo = Math.abs(imageToGo - currentImage);
+	// slide toward left
+
+	direction = currentImage > imageToGo ? 1 : -1;
+	currentPostion = -1 * currentImage * imageWidth;
+	var opts = {
+		duration:900,
+		delta:function(p){return p;},
+		step:function(delta){
+			ul.style.left = parseInt(currentPostion + direction * delta * imageWidth * numOfImageToGo) + 'px';
+		},
+		callback:function(){currentImage = imageToGo;}	
+	};
+	animate(opts);
+}
+
+function onClickPrev(){
+	if (currentImage == 0){
+		slideTo(imageNumber - 1);
+	} 		
+	else{
+		slideTo(currentImage - 1);
+	}		
+}
+
+function onClickNext(){
+	if (currentImage == imageNumber - 1){
+		slideTo(0);
+	}		
+	else{
+		slideTo(currentImage + 1);
+	}		
+}
+
+function generatePager(imageNumber){	
+	var pageNumber;
+	var pagerDiv = document.getElementById('pager');
+	for (i = 0; i < imageNumber; i++){
+		var li = document.createElement('li');
+		pageNumber = document.createTextNode(parseInt(i + 1));
+		li.appendChild(pageNumber);
+		pagerDiv.appendChild(li);
+		// add event inside a loop, closure issue.
+		li.onclick = function(i){
+			return function(){
+                clearInterval(setter);
+                setter=setInterval(function(){onClickNext()},5000);
+				slideTo(i);
+			}
+		}(i);
+	}	
+	var computedStyle = document.defaultView.getComputedStyle(li, null);
+	//border width 1px; offsetWidth = 22
+	var liWidth = parseInt(li.offsetWidth);
+	var liMargin = parseInt(computedStyle.margin.replace('px',""));
+	pagerDiv.style.width = parseInt((liWidth + liMargin * 2) * imageNumber) + 'px';
+}
+window.onload = init;
+</script>

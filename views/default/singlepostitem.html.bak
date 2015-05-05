@@ -1,0 +1,83 @@
+{{extend 'layout.html'}}
+<link href="{{=URL('static', 'css/singlepostitem.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{=URL('static', 'css/textfont.css')}}" rel="stylesheet" type="text/css" />
+<!--<div style="width:200px; height:200px; max-width:200px; overflow:hidden;">-->
+
+<div class="boxed"><table>
+    <tr>
+     <td>
+     <div class="thumbnail">
+        <div class="image">
+           <img src="{{=URL('default','download',args=val3[0].Image)}}" style="width:300px;max-width:300px;min-width:300px;max-height:300px;min-height:300px;height:300px;" />
+        </div>
+     </div>
+     <br /><br />
+     {{if(val3[0].Quantity>0):}}
+     {{=form2}}
+     {{pass}}
+     {{if(val3[0].Quantity<=0):}}
+     <p>Out of Stock</p>
+     {{pass}}
+     <a href="{{=URL('ratingadditem',args=val3[0].id)}}" class="cssbutton">UpVote</a>
+     <a href="{{=URL('addtowishlist',args=val3[0].id)}}" class="cssbutton">Add to Wish-List</a>
+     <br /><br /><br />
+     </td>
+     <td>
+         <div class="side">
+            <h2 class="name">
+                {{=val3[0].name}}
+            </h2>
+            <hr />
+            Posted By: <a href="{{=URL('userprofile',args=val3[0].created_by)}}">{{=db(db.auth_user.id==val3[0].created_by).select()[0].first_name}} {{=db(db.auth_user.id==val3[0].created_by).select()[0].last_name}}</a>
+            <br /><br />
+            Posted On: {{=val3[0].created_on}}
+            <br /><br />
+            Rating: {{=val3[0].rating}}
+            <br /><br />
+            Quantity in Stock: {{=val3[0].Quantity}}
+            <br /><br />
+            Price:  {{=val3[0].Price}}
+            <br /><br />
+             Description:<br /> 
+            {{=val3[0].description}}
+            </div>
+        </td>
+        </tr>
+ </table>
+ </div>
+<div class="boxed2">
+<h2 >
+    Comments:
+</h2>
+{{var=db(db.commitem.itemid==val3[0].id).select()}}
+{{for t in var:}}
+    <p>
+        {{temp=db(db.auth_user.id==t.created_by).select(db.auth_user.first_name,db.auth_user.last_name)}}
+        <div class="comm">{{=temp[0].first_name}} {{=temp[0].last_name}} on {{=t.created_on}} posted:</div>
+        <div class="text">{{=t.body}}</div>
+    </p>
+{{pass}}
+<br /><br />
+{{=form}}
+</div>
+
+<h2 class="center">Similar Products</h2>
+
+{{for i in range(len(similaritems)):}}
+{{if i < 5 and similaritems[i].name!=val3[0].name:}}
+<a href="{{=URL('singlepostitem',args=similaritems[i].id)}}" class = "pagerLink">
+<div class="items">
+<span>{{=similaritems[i].name}}<br /><br />
+<img  src="{{=URL('default','download',args=similaritems[i].Image)}}" id="similar" style="width:150px;max-width:150px;min-width:150px;max-height:150px;min-height:150px;height:150px;" />
+</span>
+</div>
+</a>
+<br /><br />
+{{pass}}
+{{pass}}
+
+<script>
+</script>
+
+<br /><br />
+<div align="center"><a href="{{=URL('index')}}" class="cssbutton">Return to categories</a></div>

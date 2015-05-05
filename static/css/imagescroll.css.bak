@@ -1,0 +1,80 @@
+#container{
+	width:800px;
+	height:400px;
+	padding:10px;
+    overflow:hidden;
+    margin-bottom:100px;
+	border:1px solid gray;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	text-align: center;
+}
+
+.slider_wrapper{
+    left:200px;
+	overflow: hidden;
+	position:relative;
+    width:800px;
+	height:410px;
+    padding-bottom:10px;
+	top:auto;
+}
+#image_slider{
+	position: relative;
+	height: auto;
+	list-style: none;
+	overflow: hidden;
+	float: left;
+	/*Chrom default padding for ul is 40px */
+	padding:0px;
+	margin:0px;
+}
+#image_slider li{
+	position: relative;
+	float: left;
+}
+.nvgt{
+	position:absolute;
+	top: 120px;
+	height: 50px;
+	width: 30px;
+	opacity: 0.6;
+}
+.nvgt:hover{
+	opacity: 0.9;
+}
+#prev{
+	background: #000 url('https://dl.dropboxusercontent.com/u/65639888/image/prev.png') no-repeat center;
+	left: 0px;
+}
+#next{
+	background: #000 url('https://dl.dropboxusercontent.com/u/65639888/image/next.png') no-repeat center;
+	left: 770px;
+}
+#pager{
+	/* firefox has different center method. this doesn't work for fire fox */
+	/* not in the center*/
+    left:550px;
+	padding:0px;
+    height:50px;
+	position:relative;
+	margin:auto;
+}
+#pager li{
+	padding: 0px;
+	margin:5px;
+	width:20px;
+	height:20px;
+    text-align:center;
+	border:2px solid black;
+	color:black;
+	list-style: none;
+	opacity: 0.7;
+	float:left;
+	border-radius: 3px;
+	cursor: pointer;
+}
+#pager li:hover{
+	opacity:0.9;
+}

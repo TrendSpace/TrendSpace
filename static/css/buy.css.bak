@@ -1,0 +1,36 @@
+.ads{
+    width:28%;
+    display:inline-block;
+    padding-left:5%;
+     border: 1px solid #003366 ;
+  border-radius: 15px;
+  padding:1%;
+  margin-right:2%;
+  margin-bottom:2%;
+}
+
+.text{
+    color:#131313;
+    font-size:17px;
+    padding-left:8%;
+    padding-top:1%;
+    display:block;
+   width: 85%;
+    word-wrap: break-word;
+}
+
+.cssbutton{
+background-color: #3366CC;
+border: 2px #3366CC outset;
+padding: 1px 4px;
+color: white;
+margin-left:3%;
+text-decoration: none !important;
+}
+
+.cssbutton:hover{
+border-style: inset;
+background-color:#003366;
+color:white;
+padding: 2px 3px 0 5px; /*shift text 1px to the right and down*/
+}

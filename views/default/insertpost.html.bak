@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>Insert Post</h1>
+{{=vals}}
